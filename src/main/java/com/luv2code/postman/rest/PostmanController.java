@@ -90,37 +90,37 @@ public class PostmanController {
         return deletedStudent;
     }
 
-        @GetMapping("/students/find")
-        @ResponseStatus(HttpStatus.OK)
-        public List<Student> findStudent(
-                @RequestParam(name = "first_name", required = false) String firstName,
-                @RequestParam(name = "last_name", required = false) String lastName,
-                @RequestParam(name = "status", required = false) String status
-        ) {
-            List<Student> findStudents = null;
+    @GetMapping("/students/find")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Student> findStudent(
+            @RequestParam(name = "first_name", required = false) String firstName,
+            @RequestParam(name = "last_name", required = false) String lastName,
+            @RequestParam(name = "status", required = false) String status
+    ) {
+        List<Student> findStudents = null;
 
-            if (firstName != null && lastName != null && status != null) {
-                findStudents = this.postmanRepository.findByFirstNameAndLastNameAndStatus(firstName, lastName, status);
-            } else if (firstName != null && lastName != null) {
-                findStudents = this.postmanRepository.findByFirstNameAndLastName(firstName, lastName);
-            } else if (firstName != null) {
-                findStudents = this.postmanRepository.findByFirstName(firstName);
-            } else if (lastName != null) {
-                findStudents = this.postmanRepository.findByLastName(lastName);
-            } else if (status != null) {
-                findStudents = this.postmanRepository.findByStatus(status);
-            }
-
-            if (findStudents != null && !findStudents.isEmpty()) {
-                return findStudents;
-            }
-
-            if (findStudents == null) {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "All fields are empty");
-            } else {
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No Student were found");
-            }
+        if (firstName != null && lastName != null && status != null) {
+            findStudents = this.postmanRepository.findByFirstNameAndLastNameAndStatus(firstName, lastName, status);
+        } else if (firstName != null && lastName != null) {
+            findStudents = this.postmanRepository.findByFirstNameAndLastName(firstName, lastName);
+        } else if (firstName != null) {
+            findStudents = this.postmanRepository.findByFirstName(firstName);
+        } else if (lastName != null) {
+            findStudents = this.postmanRepository.findByLastName(lastName);
+        } else if (status != null) {
+            findStudents = this.postmanRepository.findByStatus(status);
         }
+
+        if (findStudents != null && !findStudents.isEmpty()) {
+            return findStudents;
+        }
+
+        if (findStudents == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "All fields are empty");
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No Student were found");
+        }
+    }
 
     @DeleteMapping("students/deteteall")
     @ResponseStatus(HttpStatus.ACCEPTED)
